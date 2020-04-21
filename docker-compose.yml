@@ -5,14 +5,17 @@ services:
     restart: always
     volumes:
       - redis:/data
+      - /etc/localtime:/etc/localtime:ro
   postgres:
     image: postgres
     restart: always
     environment:
       POSTGRES_PASSWORD: superset
       POSTGRES_USER: postgres
+      TZ:Asia/Saigon
     volumes:
       - ./postgres:/var/lib/postgresql/data
+      - /etc/localtime:/etc/localtime:ro
     ports:
       - 5432:5432
   adminer:
@@ -29,6 +32,7 @@ services:
       - 8200:8088
     volumes:
       - ./conf:/etc/superset
+      - /etc/localtime:/etc/localtime:ro
   celery_worker:
     image: amancevice/superset
     restart: unless-stopped
@@ -37,6 +41,7 @@ services:
     volumes:
       - ./conf:/etc/superset
       - ./data:/var/lib/superset
+      - /etc/localtime:/etc/localtime:ro
     command: celery worker --app=superset.tasks.celery_app:app --pool=prefork -O fair -c 4
   celery_beat:
     image: amancevice/superset
@@ -46,6 +51,7 @@ services:
     volumes:
       - ./conf:/etc/superset
       - ./data:/var/lib/superset
+      - /etc/localtime:/etc/localtime:ro
     command: celery beat --app=superset.tasks.celery_app:app
   celery_flower:
     image: amancevice/superset
@@ -57,7 +63,7 @@ services:
     volumes:
       - ./conf:/etc/superset
       - ./data:/var/lib/superset
+      - /etc/localtime:/etc/localtime:ro
     command: celery flower --app=superset.tasks.celery_app:app
 volumes:
   redis:
-
