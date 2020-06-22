@@ -5,6 +5,7 @@ from celery.schedules import crontab
 from dateutil import tz
 from flask_appbuilder.security.manager import AUTH_DB
 
+APP_NAME = "Baokim Analytics"
 MAPBOX_API_KEY = os.getenv('MAPBOX_API_KEY', '')
 CACHE_CONFIG = {
     'CACHE_TYPE': 'redis',
@@ -13,21 +14,25 @@ CACHE_CONFIG = {
     'CACHE_REDIS_HOST': 'redis',
     'CACHE_REDIS_PORT': 6379,
     'CACHE_REDIS_DB': 1,
-    'CACHE_REDIS_URL': 'redis://:redis:6379/1'}
+    'CACHE_REDIS_URL': 'redis://:jFMPDBU5A2zhXEC5@redis:6379/1'}
 SQLALCHEMY_DATABASE_URI = \
-    'postgresql+psycopg2://postgres:superset@postgres:5432/superset'
+    'postgresql+psycopg2://postgres:9v2rpD7BKwP7u6SZ@postgres:5432/superset'
 SQLALCHEMY_TRACK_MODIFICATIONS = True
 SECRET_KEY = 'thisISaSECRET_1234'
 SQLLAB_TIMEOUT=600
 SUPERSET_WEBSERVER_TIMEOUT=1200
+WEBDRIVER_BASEURL = "https://xxx.com/"
+SUPERSET_WEBSERVER_PROTOCOL = "https"
+SUPERSET_WEBSERVER_ADDRESS = "xxx.com"
+SUPERSET_WEBSERVER_PORT = 80
 
 class CeleryConfig(object):
-    BROKER_URL = 'redis://redis:6379/0'
+    BROKER_URL = 'redis://:jFMPDBU5A2zhXEC5@redis:6379/0'
     CELERY_IMPORTS = (
         'superset.sql_lab',
         'superset.tasks',
     )
-    CELERY_RESULT_BACKEND = 'redis://redis:6379/0'
+    CELERY_RESULT_BACKEND = 'redis://:jFMPDBU5A2zhXEC5@redis:6379/0'
     CELERYD_LOG_LEVEL = 'DEBUG'
     CELERYD_PREFETCH_MULTIPLIER = 10
     CELERY_ACKS_LATE = True
@@ -61,5 +66,4 @@ class CeleryConfig(object):
 CELERY_CONFIG = CeleryConfig
 
 RESULTS_BACKEND = RedisCache(
-    host='redis', port=6379, key_prefix='superset_results')
-
+    host='redis', port=6379, key_prefix='superset_results', password='jFMPDBU5A2zhXEC5')
